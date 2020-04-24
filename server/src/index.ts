@@ -14,6 +14,7 @@ const port = process.env.PORT || 80;
 
 	try	{
 		const db = await connectDataBase();
+		console.log("db connected");
 		const schema = makeExecutableSchema({ typeDefs, resolvers });
 		const server = new ApolloServer({schema, context: () => ({ db })});
 		server.applyMiddleware({app, path: '/api'});
