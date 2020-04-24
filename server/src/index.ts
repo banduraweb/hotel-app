@@ -23,9 +23,6 @@ const port = process.env.PORT || 80;
 			console.log(`[app]: localhost: ${port} started`);
 		});
 
-		// const listings = await db.listings.find({}).toArray();
-		// console.log(listings);
-
 	} catch (e) {
 
 		console.log('server error');

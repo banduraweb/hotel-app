@@ -36,6 +36,7 @@
     "start": "node index.js",
     "build": "tsc -p ./",
     "dev": "nodemon src/index.ts",
-    "seed": "ts-node src/temp/seed.ts"
+    "seed": "ts-node src/temp/seed.ts",
+    "clear": "ts-node src/temp/clear.ts"
   }
 }
