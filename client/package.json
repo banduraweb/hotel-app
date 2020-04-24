@@ -1,5 +1,4 @@
 {
-  "homepage": "http://banduraweb.github.io/hotel-app",
   "name": "hotel-client",
   "version": "0.1.0",
   "private": true,
@@ -13,6 +12,7 @@
     "@types/node": "^13.11.0",
     "@types/react": "^16.9.32",
     "@types/react-dom": "^16.9.6",
+    "@types/react-router-dom": "^5.1.4",
     "antd": "^4.1.4",
     "apollo-boost": "^0.4.7",
     "gh-pages": "^2.2.0",
@@ -21,6 +21,7 @@
     "react": "^16.13.1",
     "react-apollo": "^3.1.5",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "typescript": "^3.8.3"
   },
