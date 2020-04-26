@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { Redirect } from "react-router-dom";
 import { useApolloClient, useMutation } from "@apollo/react-hooks";
 import { Card, Layout, Spin, Typography } from "antd";
-
+import {ErrorBanner} from '../../lib/components'
 import { LOG_IN } from "../../lib/graphql/mutations";
 import { AUTH_URL } from "../../lib/graphql/queries";
 import {
@@ -10,7 +10,7 @@ import {
   LogInVariables
 } from "../../lib/graphql/mutations/LogIn/__generated__/LogIn";
 import { AuthUrl as AuthUrlData } from "../../lib/graphql/queries/AuthUrl/__generated__/AuthUrl";
-
+import {displayErrorMessage, displaySuccessNotification} from '../../lib/utils'
 import { Viewer } from "../../lib/types";
 
 
@@ -32,8 +32,9 @@ export const Login = ({ setViewer }: Props) => {
     { data: logInData, loading: logInLoading, error: logInError }
   ] = useMutation<LogInData, LogInVariables>(LOG_IN, {
     onCompleted: data => {
-      if (data && data.logIn) {
+      if (data?.logIn) {
         setViewer(data.logIn);
+        displaySuccessNotification("You have successfully logged in!")
       }
     }
   });
@@ -57,7 +58,7 @@ export const Login = ({ setViewer }: Props) => {
       });
       window.location.href = data.authUrl;
     } catch {
-
+      displayErrorMessage(`Sorry! We weren't able to log you in. Please try again later!`)
     }
   };
 
@@ -74,10 +75,12 @@ export const Login = ({ setViewer }: Props) => {
     return <Redirect to={`/user/${viewerId}`} />;
   }
 
-
+  const LogInBannerError = logInError ? (<ErrorBanner
+    description={`Sorry! We weren't able to log you in. Please try again later!`}/>) : null;
 
   return (
     <Content className="log-in">
+      {LogInBannerError}
       <Card className="log-in-card">
         <div className="log-in-card__intro">
           <Title level={3} className="log-in-card__intro-title">
@@ -86,7 +89,7 @@ export const Login = ({ setViewer }: Props) => {
             </span>
           </Title>
           <Title level={3} className="log-in-card__intro-title">
-            Log in to TinyHouse!
+            Log in to House Rent Service!
           </Title>
           <Text>Sign in with Google to start booking available rentals!</Text>
         </div>
