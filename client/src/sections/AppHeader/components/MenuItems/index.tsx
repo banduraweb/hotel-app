@@ -8,6 +8,8 @@ import { LogOut as LogOutData } from "../../../../lib/graphql/mutations/LogOut/_
 import { displaySuccessNotification, displayErrorMessage } from "../../../../lib/utils";
 import { Viewer } from "../../../../lib/types";
 
+import './styles/index.scss'
+
 interface Props {
   viewer: Viewer;
   setViewer: (viewer: Viewer) => void;
@@ -18,7 +20,7 @@ const { Item, SubMenu } = Menu;
 export const MenuItems = ({ viewer, setViewer }: Props) => {
   const [logOut] = useMutation<LogOutData>(LOG_OUT, {
     onCompleted: data => {
-      if (data && data.logOut) {
+      if (data?.logOut) {
         setViewer(data.logOut);
         displaySuccessNotification("You've successfully logged out!");
       }

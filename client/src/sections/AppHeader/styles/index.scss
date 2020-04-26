@@ -1,0 +1,73 @@
+.app-header  {
+  display: flex;
+  box-shadow: 0 2px 8px #f0f1f2;
+  padding: 0;
+  &.white {
+    background: #fff;
+  }
+  &__logo {
+    display: inline-block;
+    padding: 0 20px;
+    & img {
+      width: 36px;
+    }
+    &-search-section {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+    &__search-input {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      padding-right: 10px;
+      & .ant-input-group {
+        border: 0;
+        width: 100%;
+        max-width: 460px;
+        & input {
+          border: 1px solid #f0f1f2;
+          box-shadow: 0 2px 4px rgba(29, 34, 108, 0.1);
+        }
+      }
+    }
+  }
+  &__menu-section {
+    float: right;
+  }
+  &-skeleton {
+    display: flex;
+    background: #fff;
+    box-shadow: 0 2px 8px #f0f1f2;
+    padding: 0;
+    &__search-section {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+    }
+    &__logo {
+      padding: 0 20px;
+      & img {
+        width: 55px;
+      }
+    }
+    &__search-input {
+      display: flex;
+      align-items: center;
+      flex-grow: 1;
+      padding-right: 10px;
+      & .ant-input-group {
+        border: 0;
+        width: 100%;
+        max-width: 460px;
+        & input {
+          border: 1px solid #f0f1f2;
+          box-shadow: 0 2px 4px rgba(29, 34, 108, 0.1);
+        }
+      }
+    }
+  }
+}
+
+
+

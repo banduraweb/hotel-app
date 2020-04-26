@@ -5,6 +5,8 @@ import { Viewer } from "../../lib/types";
 import { MenuItems } from "./components";
 
 import logo from "./assets/service-logo.png";
+import './styles/index.scss'
+
 
 interface Props {
   viewer: Viewer;
@@ -15,7 +17,7 @@ const { Header } = Layout;
 
 export const AppHeader = ({ viewer, setViewer }: Props) => {
   return (
-    <Header className="app-header">
+    <Header className="app-header white">
       <div className="app-header__logo-search-section">
         <div className="app-header__logo">
           <Link to="/">
