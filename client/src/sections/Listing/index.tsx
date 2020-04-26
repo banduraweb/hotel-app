@@ -1,6 +1,5 @@
-import React from 'react';
+import React from "react";
 
-
-export const Listing = ()=> {
-	return <h2>Listing</h2>
+export const Listing = () => {
+  return <h2>Listing</h2>;
 };

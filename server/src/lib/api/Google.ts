@@ -19,8 +19,8 @@ export const Google = {
 	}),
 	logIn: async (code: string)=>{
 
-		// @ts-ignore
-		const {tokens} = auth.getToken(code);
+
+		const {tokens} = await auth.getToken(code);
 
 		auth.setCredentials(tokens);
 

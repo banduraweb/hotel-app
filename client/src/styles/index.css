@@ -1,0 +1,17 @@
+@import "~antd/dist/antd.css";
+
+html {
+    overflow: auto;
+}
+#root,
+body,
+html {
+    height: 100%;
+    width: 100%;
+}
+#app {
+    position: relative;
+    background: #fff;
+    min-height: 100vh;
+}
+
