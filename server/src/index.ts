@@ -1,5 +1,6 @@
 require('dotenv').config();
 import express,{Application} from 'express';
+import cookieParser from 'cookie-parser';
 import {ApolloServer, makeExecutableSchema} from 'apollo-server-express';
 import {typeDefs, resolvers} from './graphql';
 import {connectDataBase} from './database'
@@ -15,8 +16,11 @@ const port = process.env.PORT || 80;
 	try	{
 		const db = await connectDataBase();
 		console.log("db connected");
+		app.use(cookieParser(process.env.SERCET));
 		const schema = makeExecutableSchema({ typeDefs, resolvers });
-		const server = new ApolloServer({schema, context: () => ({ db })});
+		const server = new ApolloServer({
+			schema, context: ({req, res}) => ({ db, req, res })
+		});
 		server.applyMiddleware({app, path: '/api'});
 
 		app.listen(port, ()=>{
