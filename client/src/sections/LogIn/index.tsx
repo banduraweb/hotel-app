@@ -32,8 +32,9 @@ export const Login = ({ setViewer }: Props) => {
     { data: logInData, loading: logInLoading, error: logInError }
   ] = useMutation<LogInData, LogInVariables>(LOG_IN, {
     onCompleted: data => {
-      if (data?.logIn) {
+      if (data?.logIn && data.logIn.token) {
         setViewer(data.logIn);
+        sessionStorage.setItem("token", data.logIn.token);
         displaySuccessNotification("You have successfully logged in!")
       }
     }
@@ -72,11 +73,14 @@ export const Login = ({ setViewer }: Props) => {
 
   if (logInData?.logIn) {
     const { id: viewerId } = logInData.logIn;
+    console.log(logInData.logIn,'logInData.logIn');
     return <Redirect to={`/user/${viewerId}`} />;
   }
 
   const LogInBannerError = logInError ? (<ErrorBanner
     description={`Sorry! We weren't able to log you in. Please try again later!`}/>) : null;
+
+
 
   return (
     <Content className="log-in">

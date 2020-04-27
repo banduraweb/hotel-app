@@ -28,7 +28,15 @@ import "./styles/index.css";
 
 
 const client = new ApolloClient({
-  uri: "/api"
+  uri: "/api",
+  request: async operation => {
+    const token = sessionStorage.getItem("token");
+    operation.setContext({
+      headers: {
+        "X-CSRF-TOKEN": token || ""
+      }
+    });
+  }
 });
 
 const initialViewer: Viewer = {
@@ -41,10 +49,16 @@ const initialViewer: Viewer = {
 
 const App = () => {
   const [viewer, setViewer] = useState<Viewer>(initialViewer);
+  console.log(viewer,'viewer');
   const [logIn, {error}] = useMutation<LogInData, LogInVariables>(LOG_IN,{
     onCompleted: data => {
       if (data?.logIn) {
         setViewer(data.logIn);
+      }
+      if (data.logIn.token) {
+        sessionStorage.setItem("token", data.logIn.token);
+      } else {
+        sessionStorage.removeItem("token");
       }
     }
   });
@@ -67,9 +81,14 @@ const App = () => {
     );
   }
 
+  const logInErrorBannerElement = error ? (
+    <ErrorBanner description="We weren't able to verify if you were logged in. Please try again later!" />
+  ) : null;
+
   return (
     <Router>
       <Layout id="app">
+        {logInErrorBannerElement}
         <Affix offsetTop={0} className="app__affix-header">
           <AppHeader viewer={viewer} setViewer={setViewer} />
         </Affix>
