@@ -36,7 +36,7 @@
     "typescript": "^3.8.3"
   },
   "scripts": {
-    "start": "node index.js",
+    "start": "node build/index.js",
     "build": "tsc -p ./",
     "dev": "nodemon src/index.ts",
     "seed": "ts-node src/temp/seed.ts",

@@ -9,15 +9,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongodb_1 = require("mongodb");
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/test?retryWrites=true&w=majority`;
-exports.connectDataBase = () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = yield mongodb_1.MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    const db = client.db('main');
-    return {
-        bookings: db.collection("bookings"),
-        listings: db.collection('listings'),
-        users: db.collection("users")
-    };
-});
-//# sourceMappingURL=index.js.map
+require('dotenv').config();
+const database_1 = require("../database");
+(() => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        console.log('[clear] running...');
+        const db = yield database_1.connectDataBase();
+        const bookings = yield db.bookings.find({}).toArray();
+        const listings = yield db.listings.find({}).toArray();
+        const users = yield db.users.find({}).toArray();
+        bookings.length > 0 && (yield db.bookings.drop());
+        listings.length > 0 && (yield db.listings.drop());
+        users.length > 0 && (yield db.users.drop());
+        console.log('[clear] success!');
+    }
+    catch (_a) {
+        throw new Error('failed to clear database');
+    }
+}))();
+//# sourceMappingURL=clear.js.map

@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 require('dotenv').config();
 const express_1 = __importDefault(require("express"));
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const apollo_server_express_1 = require("apollo-server-express");
 const graphql_1 = require("./graphql");
 const database_1 = require("./database");
@@ -24,14 +25,16 @@ const port = process.env.PORT || 80;
 ((app) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const db = yield database_1.connectDataBase();
+        console.log("db connected");
+        app.use(cookie_parser_1.default(process.env.SERCET));
         const schema = apollo_server_express_1.makeExecutableSchema({ typeDefs: graphql_1.typeDefs, resolvers: graphql_1.resolvers });
-        const server = new apollo_server_express_1.ApolloServer({ schema, context: () => ({ db }) });
+        const server = new apollo_server_express_1.ApolloServer({
+            schema, context: ({ req, res }) => ({ db, req, res })
+        });
         server.applyMiddleware({ app, path: '/api' });
         app.listen(port, () => {
             console.log(`[app]: localhost: ${port} started`);
         });
-        // const listings = await db.listings.find({}).toArray();
-        // console.log(listings);
     }
     catch (e) {
         console.log('server error');

@@ -9,15 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const mongodb_1 = require("mongodb");
-const url = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_CLUSTER}.mongodb.net/test?retryWrites=true&w=majority`;
-exports.connectDataBase = () => __awaiter(void 0, void 0, void 0, function* () {
-    const client = yield mongodb_1.MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-    const db = client.db('main');
-    return {
-        bookings: db.collection("bookings"),
-        listings: db.collection('listings'),
-        users: db.collection("users")
-    };
+exports.authorize = (db, req) => __awaiter(void 0, void 0, void 0, function* () {
+    const token = req.get("X-CSRF-TOKEN");
+    const viewer = yield db.users.findOne({
+        _id: req.signedCookies.viewer,
+        token
+    });
+    return viewer;
 });
 //# sourceMappingURL=index.js.map
